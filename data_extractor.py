@@ -479,11 +479,15 @@ class DataExtractor:
         y = [df.iloc[i]["ZIm"] for i in rows_to_keep]
         
         df = pd.DataFrame({'ZRe': x, 'ZIm': y})
-        pointer = len(df) - 3
+        pointer = len(df) - 1
         max_lookahead = 3
 
         while pointer > 0:
             current_value = df.iloc[pointer]['ZRe']
+            if pointer == 2:
+                max_lookahead = 2
+            if pointer == 2:
+                max_lookahead = 1
             for offset in range(1, max_lookahead + 1):
                 if pointer - offset < 0:
                     break
@@ -500,7 +504,6 @@ class DataExtractor:
 
         x = df['ZRe'].tolist()
         y = df['ZIm'].tolist()
-        
         for i in range(3):
             x_r = []
             y_r = []
@@ -530,7 +533,6 @@ class DataExtractor:
         df = pd.DataFrame(end_dict)
         if len(df) < 4:
             return "Not enough data"
-
         x = df['ZRe'].iloc[:]
         y = df['ZIm'].iloc[:]
 
@@ -606,7 +608,6 @@ class DataExtractor:
                 # Assuming `df` is your DataFrame and has columns 'ZRe' and 'ZIm'
                 x = df['ZRe'].iloc[:]
                 y = df['ZIm'].iloc[:]
-
                 # Step 1: Fit a 4th order polynomial to the data
                 poly_coeffs = np.polyfit(x, y, 4)
                 poly_4 = np.poly1d(poly_coeffs)
@@ -745,7 +746,6 @@ class DataExtractor:
                 return avg
 
     def extract_data_imp_second_semi(file_path: str, ir_result):
-
         # Data extraction for ZRe and ZIm
         zre_values, zim_values = [], []
 
@@ -803,11 +803,15 @@ class DataExtractor:
         y = [df.iloc[i]["ZIm"] for i in rows_to_keep]
         df = pd.DataFrame({'ZRe': x, 'ZIm': y})
 
-        pointer = len(df) - 3
+        pointer = len(df) - 1
         max_lookahead = 3
 
         while pointer > 0:
             current_value = df.iloc[pointer]['ZRe']
+            if pointer == 2:
+                max_lookahead = 2
+            if pointer == 2:
+                max_lookahead = 1
             for offset in range(1, max_lookahead + 1):
                 if pointer - offset < 0:
                     break
